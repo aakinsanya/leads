@@ -1,4 +1,4 @@
-﻿using API.Data.DbModel;
+using API.Data.DbModel;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Data
@@ -20,9 +20,10 @@ namespace API.Data
             modelBuilder.Entity<Lead>(entity =>
             {
                 entity.HasKey(e => e.Email);
+                entity.HasIndex(e => e.Email).IsUnique();
 
                 entity.Property(e => e.Email)
-                      .IsRequired()
+                      .IsRequired()                      
                       .HasMaxLength(100);
 
                 entity.Property(e => e.Name)
@@ -47,6 +48,7 @@ namespace API.Data
             modelBuilder.Entity<LeadsRetrievalLog>(entity =>
             {
                 entity.HasKey(e => e.Id);
+                entity.HasIndex(e => e.LastRunTime);
 
                 entity.Property(e => e.Id)
                     .IsRequired()
@@ -54,7 +56,7 @@ namespace API.Data
 
                 entity.Property(e => e.LastRunTime)
                     .HasColumnType("datetime")
-                    .IsRequired(false);
+                    .IsRequired();
 
                 entity.Property(e => e.Status)
                       .IsRequired();
